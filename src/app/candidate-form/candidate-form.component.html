@@ -1,0 +1,139 @@
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0">{{ isEditMode ? 'Edit Candidate' : 'Add New Candidate' }}</h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="name" class="form-label">First Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control"
+                   [class.is-invalid]="isInvalid('name')"
+                   id="name" formControlName="name">
+            <div *ngIf="isInvalid('name')" class="invalid-feedback">
+              <div *ngIf="getControlErrors('name', 'required')">First Name is required.</div>
+              <div *ngIf="getControlErrors('name', 'minlength')">First Name must be at least 2 characters.</div>
+              <div *ngIf="getControlErrors('name', 'maxlength')">First Name cannot exceed 50 characters.</div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control"
+                   [class.is-invalid]="isInvalid('lastName')"
+                   id="lastName" formControlName="lastName">
+            <div *ngIf="isInvalid('lastName')" class="invalid-feedback">
+              <div *ngIf="getControlErrors('lastName', 'required')">Last Name is required.</div>
+              <div *ngIf="getControlErrors('lastName', 'minlength')">Last Name must be at least 2 characters.</div>
+              <div *ngIf="getControlErrors('lastName', 'maxlength')">Last Name cannot exceed 50 characters.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-6 mb-3">
+            <label for="DOB" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+            <input type="date" class="form-control"
+                   [class.is-invalid]="isInvalid('DOB')"
+                   id="DOB" formControlName="DOB">
+            <div *ngIf="isInvalid('DOB')" class="invalid-feedback">
+              <div *ngIf="getControlErrors('DOB', 'required')">Date of Birth is required.</div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+        <h5>Address Details</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="firstLineOfAddress" class="form-label">Address Line 1</label>
+            <input type="text" class="form-control"
+                   [class.is-invalid]="isInvalid('firstLineOfAddress')"
+                   id="firstLineOfAddress" formControlName="firstLineOfAddress">
+            <div *ngIf="isInvalid('firstLineOfAddress')" class="invalid-feedback">
+              <div *ngIf="getControlErrors('firstLineOfAddress', 'maxlength')">Address cannot exceed 100 characters.</div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="addressCity" class="form-label">City</label>
+            <input type="text" class="form-control"
+                   [class.is-invalid]="isInvalid('addressCity')"
+                   id="addressCity" formControlName="addressCity">
+            <div *ngIf="isInvalid('addressCity')" class="invalid-feedback">
+              <div *ngIf="getControlErrors('addressCity', 'maxlength')">City cannot exceed 50 characters.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="addressCountry" class="form-label">Country</label>
+            <input type="text" class="form-control"
+                   [class.is-invalid]="isInvalid('addressCountry')"
+                   id="addressCountry" formControlName="addressCountry">
+            <div *ngIf="isInvalid('addressCountry')" class="invalid-feedback">
+              <div *ngIf="getControlErrors('addressCountry', 'maxlength')">Country cannot exceed 50 characters.</div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="addressPostCode" class="form-label">Post Code</label>
+            <input type="text" class="form-control"
+                   [class.is-invalid]="isInvalid('addressPostCode')"
+                   id="addressPostCode" formControlName="addressPostCode">
+            <div *ngIf="isInvalid('addressPostCode')" class="invalid-feedback">
+              <div *ngIf="getControlErrors('addressPostCode', 'maxlength')">Post Code cannot exceed 10 characters.</div>
+              <div *ngIf="getControlErrors('addressPostCode', 'pattern')">Invalid Post Code format (alphanumeric only).</div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+        <h5>Phone Numbers</h5>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="homePhoneNo" class="form-label">Home Phone</label>
+            <input type="tel" class="form-control"
+                   [class.is-invalid]="isInvalid('homePhoneNo')"
+                   id="homePhoneNo" formControlName="homePhoneNo">
+            <div *ngIf="isInvalid('homePhoneNo')" class="invalid-feedback">
+              <div *ngIf="getControlErrors('homePhoneNo', 'maxlength')">Phone number cannot exceed 20 characters.</div>
+              <div *ngIf="getControlErrors('homePhoneNo', 'pattern')">Invalid phone number format.</div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="mobilePhoneNo" class="form-label">Mobile Phone</label>
+            <input type="tel" class="form-control"
+                   [class.is-invalid]="isInvalid('mobilePhoneNo')"
+                   id="mobilePhoneNo" formControlName="mobilePhoneNo">
+            <div *ngIf="isInvalid('mobilePhoneNo')" class="invalid-feedback">
+              <div *ngIf="getControlErrors('mobilePhoneNo', 'maxlength')">Phone number cannot exceed 20 characters.</div>
+              <div *ngIf="getControlErrors('mobilePhoneNo', 'pattern')">Invalid phone number format.</div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="workPhoneNo" class="form-label">Work Phone</label>
+            <input type="tel" class="form-control"
+                   [class.is-invalid]="isInvalid('workPhoneNo')"
+                   id="workPhoneNo" formControlName="workPhoneNo">
+            <div *ngIf="isInvalid('workPhoneNo')" class="invalid-feedback">
+              <div *ngIf="getControlErrors('workPhoneNo', 'maxlength')">Phone number cannot exceed 20 characters.</div>
+              <div *ngIf="getControlErrors('workPhoneNo', 'pattern')">Invalid phone number format.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-end mt-4">
+          <button type="button" class="btn btn-secondary me-2" routerLink="/candidates">Cancel</button>
+          <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Update Candidate' : 'Create Candidate' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="container mt-4">
+  <div class="card shadow-sm" *ngIf="candidate">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0">Candidate Details: {{ candidate.name }} {{ candidate.lastName }}</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Personal Information</h5>
+          <p><strong>First Name:</strong> {{ candidate.name }}</p>
+          <p><strong>Last Name:</strong> {{ candidate.lastName }}</p>
+          <p><strong>Date of Birth:</strong> {{ candidate.formattedDOB }}</p>
+        </div>
+        <div class="col-md-6">
+          <h5>Contact Information</h5>
+          <p><strong>Home Phone:</strong> {{ candidate.homePhoneNo }}</p>
+          <p><strong>Mobile Phone:</strong> {{ candidate.mobilePhoneNo }}</p>
+          <p><strong>Work Phone:</strong> {{ candidate.workPhoneNo }}</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h5>Address Details</h5>
+      <p><strong>Address Line 1:</strong> {{ candidate.firstLineOfAddress }}</p>
+      <p><strong>City:</strong> {{ candidate.addressCity }}</p>
+      <p><strong>Country:</strong> {{ candidate.addressCountry }}</p>
+      <p><strong>Post Code:</strong> {{ candidate.addressPostCode }}</p>
+
+      <hr>
+
+      <h5>Manage Skills</h5>
+      <div class="input-group mb-3">
+        <select class="form-select" [(ngModel)]="selectedSkillIdToAdd" [disabled]="isUpdatingSkills">
+          <option [ngValue]="null" disabled selected>Select a skill</option>
+          <option *ngFor="let skill of allSkills" [ngValue]="skill.id">
+            {{ skill.skillName }}
+          </option>
+        </select>
+        <button class="btn btn-outline-primary" type="button" (click)="addSkill()" [disabled]="isUpdatingSkills || !selectedSkillIdToAdd">
+          <span *ngIf="isUpdatingSkills" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+          Add Skill
+        </button>
+      </div>
+
+      <div *ngIf="candidate.skills && candidate.skills.length > 0; else noSkills">
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center"
+              *ngFor="let skill of candidate.skills">
+            {{ skill.name }}
+            <div class="d-flex align-items-center">
+              <small class="text-muted me-2">
+                (Skill Added: {{ skill.dateSkillAdded}})
+              </small>
+              <button class="btn btn-outline-danger btn-sm" (click)="removeSkill(skill.id, skill.name)" [disabled]="isUpdatingSkills">
+                Remove
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <ng-template #noSkills>
+        <p class="text-muted">No skills listed for this candidate. Add one using the dropdown above!</p>
+      </ng-template>
+
+      <hr>
+
+      <p class="text-muted text-end">
+        Last Updated: {{ candidate.formattedDateLastUpdated }} (Created: {{ candidate.formattedDateCreated }})
+      </p>
+    </div>
+    <div class="card-footer text-end">
+      <button class="btn btn-secondary me-2" (click)="goBack()">Back to List</button>
+      <button class="btn btn-warning" (click)="editCandidate()">Edit Candidate</button>
+    </div>
+  </div>
+
+  <div class="alert alert-warning mt-4" role="alert" *ngIf="!candidate">
+    <p>Candidate not found or loading...</p>
+    <button class="btn btn-secondary" (click)="goBack()">Back to List</button>
+  </div>
+</div>
